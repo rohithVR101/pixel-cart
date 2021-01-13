@@ -1,1 +1,11 @@
-<p>add-product works!</p>
+<h1 mat-dialog-title>Add Product by ID</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Product ID</mat-label>
+        <input matInput [(ngModel)]="data.Product_ID">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button [mat-dialog-close]="data.Product_ID" cdkFocusInitial>Add</button>
+</div>

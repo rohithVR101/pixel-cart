@@ -1,0 +1,53 @@
+table {
+  vertical-align: middle;
+  width: 100%;
+}
+button {
+  padding: 0px 30px;
+}
+
+mat-card {
+  left: 0;
+  bottom: 0;
+  width: -webkit-fill-available;
+  overflow: hidden;
+}
+
+mat-grid-tile {
+  background: lightblue;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "product-content product-content price-details"
+    "clear-refresh add-button price-details";
+  grid-gap: 1rem;
+  padding: 1rem;
+}
+
+.product-content-grid {
+  grid-area: product-content;
+}
+.price-details-grid {
+  grid-area: price-details;
+}
+.clear-refresh-grid {
+  grid-area: clear-refresh;
+}
+.add-button-grid {
+  grid-area: add-button;
+  text-align: right;
+}
+.footer-bar {
+    width: 100%;
+    position: fixed;
+    padding: 0.5rem;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+}
+.total-bar-grid {
+  grid-area: total-bar;
+}
