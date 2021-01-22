@@ -47,6 +47,8 @@ mat-grid-tile {
     bottom: 0;
     display: flex;
     justify-content: space-between;
+    background: #212121;
+    color:#fff;
 }
 .total-bar-grid {
   grid-area: total-bar;

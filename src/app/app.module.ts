@@ -52,6 +52,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BillComponent } from './vendor-panel/bill/bill.component';
 
 
 
@@ -87,6 +88,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     CardComponent,
     BackComponent,
     VendorPanelComponent,
+    BillComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,13 +8,9 @@ import { BalanceAmountComponent } from './dialogue-box/balance-amount/balance-am
 
 import { Cart } from 'src/app/models/Cart';
 import { MatTable } from '@angular/material/table';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-vendor-panel',
@@ -92,21 +88,25 @@ export class VendorPanelComponent implements OnInit {
     });
   }
 
-  updateProduct(id: number): void {
-    if (this.quantityChange.value === 0) {
+  // increaseQuantity(id: number): void {
+  //   this.updateProduct(id,)
+  // }
+
+  // decreaseQuantity(id: number): void {}
+
+  updateProduct(id: number, quantity: number): void {
+    if (quantity === 0) {
       this.removeProduct(id);
       return;
     }
-    this.cartService
-      .update(id, { quantity: this.quantityChange.value })
-      .subscribe(
-        (data) => {
-          this.refreshList();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+    this.cartService.update(id, { quantity: quantity }).subscribe(
+      (data) => {
+        this.refreshList();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   removeProduct(id: number): void {
@@ -196,5 +196,13 @@ export class VendorPanelComponent implements OnInit {
     this._snackBar.open('Bill generated', 'Open', {
       duration: 10000,
     });
+    this.cartService.refresh().subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
