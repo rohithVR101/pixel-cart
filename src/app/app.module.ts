@@ -32,6 +32,12 @@ import { CashComponent } from './vendor-panel/button/cash/cash.component';
 import { CardComponent } from './vendor-panel/button/card/card.component';
 import { BackComponent } from './vendor-panel/button/back/back.component';
 
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +72,12 @@ import { BackComponent } from './vendor-panel/button/back/back.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatFormFieldModule,
+    MatIconModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
