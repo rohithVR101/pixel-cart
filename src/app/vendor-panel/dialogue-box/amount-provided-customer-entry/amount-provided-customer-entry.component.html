@@ -1,1 +1,12 @@
-<p>amount-provided-customer-entry works!</p>
+<h1 mat-dialog-title>Amount provided by the customer</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Amount</mat-label>
+        <input matInput placeholder="0" [(ngModel)]="data.amount">
+        <span matPrefix>₹&nbsp;</span>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Back</button>
+    <button mat-button [mat-dialog-close]="data.amount" cdkFocusInitial>Continue</button>
+</div>

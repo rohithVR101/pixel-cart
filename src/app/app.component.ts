@@ -7,6 +7,7 @@ import {FormControl, Validators} from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+<<<<<<< HEAD
   title = 'pixel-cart';
   
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -19,4 +20,7 @@ export class AppComponent {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
   hide = true;
+=======
+  title = 'PIXEL CART';
+>>>>>>> a6c90d13f59e884dc44c79f6a2156ce5edc8d851
 }

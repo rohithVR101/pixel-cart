@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 :root {
     --input-padding-x: 1.5rem;
     --input-padding-y: 0.75rem;
@@ -84,3 +85,16 @@ margin-bottom: -25px;
 
 
 
+=======
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+.fill-remaining-space {
+   /*This fills the remaining space, by using flexbox.  
+  Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+#logo-text{
+    font-family: 'Fredoka One', cursive;
+    font-size: x-large;
+}
+>>>>>>> a6c90d13f59e884dc44c79f6a2156ce5edc8d851

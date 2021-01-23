@@ -28,7 +28,11 @@
               "src/assets"
             ],
             "styles": [
+<<<<<<< HEAD
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+=======
+              "src/pixel-theme.scss",
+>>>>>>> a6c90d13f59e884dc44c79f6a2156ce5edc8d851
               "src/styles.css"
             ],
             "scripts": []

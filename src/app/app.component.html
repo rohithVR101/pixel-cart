@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <html>
     <head>
         <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -60,3 +61,40 @@
   </div>
   </body>
   </html>
+=======
+<div>
+  <mat-toolbar color="primary">
+    <button mat-button routerLink="/">
+      <span id="logo-text">{{title}}</span>
+    </button>
+
+    <!-- This fills the remaining space of the current row -->
+    <span class="fill-remaining-space"></span>
+    <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+      <!-- <button mat-button routerLink="/cart">Cart</button>
+      <button mat-button routerLink="/cart/add">Add Product</button> -->
+    </div>
+    <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
+      <span>menu</span>
+    </button>
+
+  </mat-toolbar>
+
+  <mat-menu x-position="before" #menu="matMenu">
+    <button mat-menu-item routerLink="/cart">Cart</button>
+    <button mat-menu-item routerLink="/cart/add">Add Product</button>
+    <!--<button mat-menu-item>Help</button>-->
+  </mat-menu>
+
+  <div class="container mt-3">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+
+<!-- <div>
+  <h1>{{ title }}</h1>
+  <app-header></app-header>
+  <router-outlet></router-outlet>
+</div> -->
+>>>>>>> a6c90d13f59e884dc44c79f6a2156ce5edc8d851
