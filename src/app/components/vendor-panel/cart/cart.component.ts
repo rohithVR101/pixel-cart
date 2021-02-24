@@ -1,23 +1,29 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CartService } from 'src/app/services/cart/cart.service';
+import { FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
+
 import { AddProductComponent } from './button/add-product/add-product.component';
 import { CustomerEmailNameEntryComponent } from './dialogue-box/customer-email-name-entry/customer-email-name-entry.component';
 import { CustomerCashCardSelectionComponent } from './dialogue-box/customer-cash-card-selection/customer-cash-card-selection.component';
 import { AmountProvidedCustomerEntryComponent } from './dialogue-box/amount-provided-customer-entry/amount-provided-customer-entry.component';
 import { BalanceAmountComponent } from './dialogue-box/balance-amount/balance-amount.component';
+import { BillGeneratedMessageSnackBarComponent } from './bill-generated-message-snack-bar/bill-generated-message-snack-bar.component';
+
+import { CartService } from 'src/app/services/cart/cart.service';
+import { BillService } from 'src/app/services/bill/bill.service';
 
 import { Cart } from 'src/app/models/Cart';
+
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-vendor-panel',
-  templateUrl: './vendor-panel.component.html',
-  styleUrls: ['./vendor-panel.component.css'],
+  selector: 'app-cart',
+  templateUrl: './cart.component.html',
+  styleUrls: ['./cart.component.css'],
 })
-export class VendorPanelComponent implements OnInit {
+export class CartComponent implements OnInit {
   quantityChange!: FormControl;
 
   subtotal!: number;
@@ -32,6 +38,9 @@ export class VendorPanelComponent implements OnInit {
   customer_email!: string;
   payment_mode!: string;
 
+  order_data!: object;
+  bill_subscription!: Subscription;
+
   @ViewChild(MatTable)
   table!: MatTable<any>;
   products!: Cart[];
@@ -40,6 +49,7 @@ export class VendorPanelComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
+    private billService: BillService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar
   ) {}
@@ -55,6 +65,9 @@ export class VendorPanelComponent implements OnInit {
     ];
     this.refreshList();
     this.dataSource = this.products;
+    this.bill_subscription = this.billService.currentOrderData.subscribe(
+      (order) => (this.order_data = order)
+    );
   }
 
   refreshList(): void {
@@ -87,12 +100,6 @@ export class VendorPanelComponent implements OnInit {
       );
     });
   }
-
-  // increaseQuantity(id: number): void {
-  //   this.updateProduct(id,)
-  // }
-
-  // decreaseQuantity(id: number): void {}
 
   updateProduct(id: number, quantity: number): void {
     if (quantity === 0) {
@@ -161,6 +168,7 @@ export class VendorPanelComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         console.log(result);
+        this.payment_mode = result;
         if (result === 'cash') {
           console.log('HYAAAAAAA');
           const dialogRef = this.dialog.open(
@@ -193,12 +201,26 @@ export class VendorPanelComponent implements OnInit {
     });
   }
   openSnackBar() {
-    this._snackBar.open('Bill generated', 'Open', {
-      duration: 10000,
-    });
     this.cartService.refresh().subscribe(
       (data) => {
-        console.log(data);
+        this._snackBar.openFromComponent(BillGeneratedMessageSnackBarComponent);
+        this.order_data = {
+          data: data,
+          bill_no:
+            (3 - ('' + data[0].Cart_Session_ID).length > 0
+              ? new Array(3 - ('' + data[0].Cart_Session_ID).length + 1).join(
+                  '0'
+                )
+              : '') + data[0].Cart_Session_ID,
+          date: new Date().toDateString(),
+          time: new Date().toLocaleTimeString(),
+          payment_mode:
+            this.payment_mode.substring(0, 1).toUpperCase() +
+            this.payment_mode.substring(1),
+          amount_paid: this.paid,
+          total_items: data.reduce((n, { Quantity }) => n + Quantity, 0),
+        };
+        this.billService.updateOrderData(this.order_data);
       },
       (error) => {
         console.log(error);
