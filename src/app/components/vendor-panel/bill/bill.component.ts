@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { BillService } from 'src/app/services/bill/bill.service';
 
@@ -8,15 +8,11 @@ import { BillService } from 'src/app/services/bill/bill.service';
   styleUrls: ['./bill.component.css'],
 })
 export class BillComponent implements OnInit {
-  order_data!: object;
-  bill_subscription!: Subscription;
+  @Input() order_data!: object;
 
   constructor(private billService: BillService) {}
 
   ngOnInit(): void {
-    this.bill_subscription = this.billService.currentOrderData.subscribe(
-      (order) => (this.order_data = order)
-    );
     console.log(this.order_data);
     window.print();
   }

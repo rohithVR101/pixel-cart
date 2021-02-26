@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vendor-panel.component.css'],
 })
 export class VendorPanelComponent implements OnInit {
+
+  bill_content!:object;
+
   constructor() {}
 
   ngOnInit(): void {}
