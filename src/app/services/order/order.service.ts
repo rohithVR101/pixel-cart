@@ -4,10 +4,9 @@ import { Observable } from 'rxjs';
 import { Order } from '../../models/Order';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
-
   baseUrl = 'http://localhost:3000/api/orders';
 
   httpOptions = {
@@ -18,13 +17,17 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  new(): Observable<any> {
-    return this.http.post(`${this.baseUrl}/new`, {});
+  new(data: object): Observable<any> {
+    return this.http.post(`${this.baseUrl}/new`, data);
   }
 
-//   add(id: number): Observable<Order> {
-//     return this.http.post<Order>(`${this.baseUrl}/add/${id}`, []);
-//   }
+  bill(bill_no: string): Observable<any> {
+    return this.http.get<Order[]>(`${this.baseUrl}/bill/${bill_no}`);
+  }
+
+  //   add(id: number): Observable<Order> {
+  //     return this.http.post<Order>(`${this.baseUrl}/add/${id}`, []);
+  //   }
 
   update(id: number, data: object): Observable<any> {
     return this.http.put(`${this.baseUrl}/${id}`, data);

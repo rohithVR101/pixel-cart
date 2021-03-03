@@ -1,6 +1,6 @@
 <div id="bill-body" style="text-align: center; font-family: serif;">
     <div>
-        <h2 style="font-family: serif; font-weight: bold;">Bill No : 320</h2>
+        <h2 style="font-family: serif; font-weight: bold;">Bill No : {{bill_no}}</h2>
         <h3 style="font-family: serif;  font-weight: bold;">SRS Supermarket</h3>
         <p>2784 Glacier Hill Street</p>
         <p>Atlanta</p>
@@ -14,8 +14,8 @@
                 </td>
                 <td>
                     <div style="text-align: right;">
-                        <p>Date: 2020-02-23</p>
-                        <p>Time: 8:34:11 PM</p>
+                        <p>Date: {{order_date}}</p>
+                        <p>Time: {{order_time}}</p>
                     </div>
                 </td>
             </tr>
@@ -33,33 +33,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="text-center" style="padding-right: 110px">1</td>
-                    <td>Flatter Theme</td>
-                    <td class="text-right">10</td>
-                    <td class="text-right">₹18</td>
-                    <td class="text-right" style="padding-left: 110px">₹180</td>
-                </tr>
-                <tr>
-                    <td class="text-center " style="padding-right: 110px">2</td>
-                    <td>Flat Icons</td>
-                    <td class="text-right">6</td>
-                    <td class="text-right">₹59</td>
-                    <td class="text-right" style="padding-left: 110px">₹254</td>
-                </tr>
-                <tr>
-                    <td class="text-center" style="padding-right: 110px">3</td>
-                    <td>Wordpress version</td>
-                    <td class="text-right">4</td>
-                    <td class="text-right">₹95</td>
-                    <td class="text-right" style="padding-left: 110px">₹285</td>
-                </tr>
-                <tr class="last-row">
-                    <td class="text-center" style="padding-right: 110px">4</td>
-                    <td>Server Deployment</td>
-                    <td class="text-right">1</td>
-                    <td class="text-right">₹300</td>
-                    <td class="text-right" style="padding-left: 110px">₹300</td>
+                <tr *ngFor="let i of numbers">
+                    <td class="text-center" style="padding-right: 110px">{{i+1}}</td>
+                    <td>{{products[i].Product_Name}}</td>
+                    <td class="text-right">{{products[i].Quantity}}</td>
+                    <td class="text-right">₹{{products[i].Rate}}</td>
+                    <td class="text-right" style="padding-left: 110px">₹{{products[i].Amount}}</td>
                 </tr>
             </tbody>
         </table>
@@ -69,23 +48,23 @@
             <tr>
                 <td>
                     <div style="text-align: left;">
-                        <p>Payment Mode: Cash</p>
+                        <p>Payment Mode: {{payment_mode}}</p>
                         <div class="payment mode">
-                            <p>Received Amount: ₹1000</p>
-                            <p>Balance given: ₹9</p>
+                            <p>Received Amount: {{paid}}</p>
+                            <p>Balance given: {{balance_given}}</p>
                         </div>
-                        <p>Total items: 10</p>
+                        <p>Total items: {{products.length}}</p>
                     </div>
                 </td>
                 <td>
                     <div style="text-align: right;">
-                        <p>Subtotal : ₹1019</p>
-                        <p>Discount (10%) : ₹101 </p>
-                        <p>CGST (5%) : ₹73 </p>
-                        <p>SGST (5%) : ₹73 </p>
-                        <p>GST (5%) : ₹73 </p>
-                        <p style="font-weight: bold;">Grand Total : ₹991 </p>
-                        <p style="text-transform: uppercase;">Rupees Nine Ninenty One Only</p>
+                        <p>Subtotal : {{subtotal}}</p>
+                        <p>Discount (10%) : {{discounttotal}} </p>
+                        <p>CGST (5%) : {{cgst}} </p>
+                        <p>SGST (5%) : {{sgst}} </p>
+                        <p>GST (5%) : {{taxtotal}} </p>
+                        <p style="font-weight: bold;">Grand Total : {{total}} </p>
+                        <p style="text-transform: uppercase;">{{total_text}}</p>
                     </div>
                 </td>
             </tr>

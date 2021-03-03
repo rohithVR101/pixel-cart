@@ -10,13 +10,14 @@ import { BalanceAmountComponent } from './dialogue-box/balance-amount/balance-am
 import { BillGeneratedMessageSnackBarComponent } from './bill-generated-message-snack-bar/bill-generated-message-snack-bar.component';
 
 import { CartService } from 'src/app/services/cart/cart.service';
-import { BillService } from 'src/app/services/bill/bill.service';
+import { OrderService } from 'src/app/services/order/order.service';
 
 import { Cart } from 'src/app/models/Cart';
 
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Order } from 'src/app/models/Order';
 
 @Component({
   selector: 'app-cart',
@@ -26,17 +27,22 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CartComponent implements OnInit {
   quantityChange!: FormControl;
 
+  bill_no!: string;
+  order_date!: string;
+  order_time!: string;
   subtotal!: number;
   taxtotal!: number;
   discounttotal!: number;
   total!: number;
+  payment_mode!: string;
   paid!: number;
+  balance_given!: number;
+  total_quantity!: number;
 
   product_id!: number;
   customer_phone!: string;
   customer_name!: string;
   customer_email!: string;
-  payment_mode!: string;
 
   order_data!: object;
   bill_subscription!: Subscription;
@@ -49,7 +55,7 @@ export class CartComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
-    private billService: BillService,
+    private orderService: OrderService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar
   ) {}
@@ -65,9 +71,6 @@ export class CartComponent implements OnInit {
     ];
     this.refreshList();
     this.dataSource = this.products;
-    this.bill_subscription = this.billService.currentOrderData.subscribe(
-      (order) => (this.order_data = order)
-    );
   }
 
   refreshList(): void {
@@ -118,6 +121,17 @@ export class CartComponent implements OnInit {
 
   removeProduct(id: number): void {
     this.cartService.delete(id).subscribe(
+      (data) => {
+        this.refreshList();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  createOrder(orderData: object): void {
+    this.orderService.new(orderData).subscribe(
       (data) => {
         this.refreshList();
       },
@@ -204,23 +218,37 @@ export class CartComponent implements OnInit {
     this.cartService.refresh().subscribe(
       (data) => {
         this._snackBar.openFromComponent(BillGeneratedMessageSnackBarComponent);
-        this.order_data = {
-          data: data,
-          bill_no:
-            (3 - ('' + data[0].Cart_Session_ID).length > 0
-              ? new Array(3 - ('' + data[0].Cart_Session_ID).length + 1).join(
-                  '0'
-                )
-              : '') + data[0].Cart_Session_ID,
-          date: new Date().toDateString(),
-          time: new Date().toLocaleTimeString(),
-          payment_mode:
-            this.payment_mode.substring(0, 1).toUpperCase() +
-            this.payment_mode.substring(1),
-          amount_paid: this.paid,
-          total_items: data.reduce((n, { Quantity }) => n + Quantity, 0),
-        };
-        this.billService.updateOrderData(this.order_data);
+        this.order_date = new Date().toDateString();
+        this.order_time = new Date().toLocaleTimeString();
+        this.bill_no =
+          (3 - ('' + data[0].Cart_Session_ID).length > 0
+            ? new Array(3 - ('' + data[0].Cart_Session_ID).length + 1).join('0')
+            : '') + data[0].Cart_Session_ID;
+        this.payment_mode =
+          this.payment_mode.substring(0, 1).toUpperCase() +
+          this.payment_mode.substring(1);
+        this.total_quantity = data.reduce((n, { Quantity }) => n + Quantity, 0);
+        data.forEach((product) => {
+          this.createOrder({
+            Bill_No: this.bill_no,
+            Customer_Phone: this.customer_phone,
+            Product_ID: product.Product_ID,
+            Product_Name: product.Product_Name,
+            Quantity: product.Quantity,
+            Rate: product.Price,
+            Amount: product.Quantity * product.Price,
+            Order_Date: this.order_date,
+            Order_Time: this.order_time,
+            Payment_Mode: this.payment_mode,
+            Received_Amount: this.paid,
+            Balance_Given: this.paid,
+            CGST: this.taxtotal / 2,
+            SGST: this.taxtotal / 2,
+            Discount: this.discounttotal,
+            Sub_Total: this.subtotal,
+          });
+        });
+        // this.sendOrderData(this.order_data);
       },
       (error) => {
         console.log(error);
