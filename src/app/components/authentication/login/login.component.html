@@ -30,49 +30,51 @@
     integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
     crossorigin="anonymous"></script>
 
-  <div class="container-fluid">
-    <div class="row no-gutter">
-      <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
-      <div class="col-md-8 col-lg-6">
-        <div class="login d-flex align-items-center py-5">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-9 col-lg-8 mx-auto">
-                <h3 class="login-heading mb-3">Welcome back!</h3>
-                <link href="login.component.css" rel="stylesheet" type="text/css">
-                <div class=" example-container">
-                  <div class="d-grid gap-2 form-b">
-                    <mat-form-field appearance="fill">
-                      <mat-label>Enter your email</mat-label>
-                      <input matInput placeholder="pat@example.com" required>
-                      <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
-                    </mat-form-field>
-                  </div>
 
-                  <div class="d-grid gap-2 form-b">
-                    <mat-form-field appearance="fill">
-                      <mat-label>Enter your password</mat-label>
-                      <input matInput [type]="hide ? 'password' : 'text'">
-                      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                        [attr.aria-pressed]="hide">
-                        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-                      </button>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="d-grid gap-2 form-b">
-                  <button class=" form-b text-uppercase font-weight-bold mb-2" mat-raised-button
-                    color="primary">login</button>
-                </div>
-                <div class="example-button-row">
-                  <a mat-button href="https://www.google.com/" target="_blank"><u>Admin Login</u></a>
-
-                </div>
-              </div>
+    <div class="container-fluid">
+        <div class="row no-gutter">
+            <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+            <div class="col-md-8 col-lg-6">
+                    <div class="grid-container">
+                        <div class="login d-flex align-items-center py-5">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-9 col-lg-8 mx-auto">
+                                        <h3 class="login-heading mb-3">Welcome back!</h3>
+                                        <link href="login.component.css" rel="stylesheet" type="text/css">
+                                            <div class=" example-container">
+                                                <div class="d-grid gap-2 form-b">
+                                                    <mat-form-field appearance="fill">
+                                                        <mat-label>Enter your phone number</mat-label>
+                                                        <span matPrefix>+91 &nbsp;</span>
+                                                        <input type="tel" matInput placeholder="1234567890" >
+                                                        <!-- <mat-icon matSuffix>mode_edit</mat-icon> -->
+                                                        <mat-error *ngIf="phoneno.invalid">{{ getErrorMessage() }}</mat-error>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="d-grid gap-2 form-b">
+                                                    <mat-form-field appearance="fill">
+                                                    <mat-label>Enter your password</mat-label>
+                                                    <input matInput [type]="hide ? 'password' : 'text'">
+                                                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                                                        [attr.aria-pressed]="hide">
+                                                        <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                                                    </button>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid gap-2 form-b">
+                                                <button class=" form-b text-uppercase font-weight-bold mb-2" mat-raised-button color="primary">login</button>
+                                            </div>
+                                    </div>
+                                    <div class="example-button-row">
+                                        <a mat-button href="https://www.google.com/" target="_blank"><u>Forgot password</u></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-</div>
+</div> 
