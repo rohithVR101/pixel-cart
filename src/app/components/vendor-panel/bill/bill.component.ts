@@ -36,7 +36,7 @@ export class BillComponent implements OnInit {
 
   ngOnInit() {
     this.getBillData();
-    window.print();
+    // window.print();
   }
 
   getBillData() {
@@ -61,6 +61,7 @@ export class BillComponent implements OnInit {
         this.total_text =
           this.utilityService.numWords((this.total).toFixed(2)) + ' ONLY';
         this.numbers = Array.from(Array(this.products.length).keys());
+        
       },
       (error) => {
         console.log(error);

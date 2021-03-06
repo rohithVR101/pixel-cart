@@ -39,7 +39,7 @@ export class UtilityService {
     'sixty',
     'seventy',
     'eighty',
-    'ninety',
+    ' ninety',
   ];
 
   regex: RegExp = /^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})(.)(\d{2})$/;
@@ -67,41 +67,35 @@ export class UtilityService {
 
     let str = '';
     let flag=false;
-    str +=
-      Number(this.numArr[1]) != 0
-        ? (this.getLT20(this.numArr[1]) || this.getGT20(this.numArr[1])) +
+    if ( Number(this.numArr[1]) != 0
+        ){ str += (this.getLT20(this.numArr[1]) || this.getGT20(this.numArr[1])) +
           'crore '
-        : '';
-    str +=
-      Number(this.numArr[2]) != 0
-        ? (this.getLT20(this.numArr[2]) || this.getGT20(this.numArr[2])) +
+        } else {str+=''};
+    if ( Number(this.numArr[2]) != 0
+        ){ str += (this.getLT20(this.numArr[2]) || this.getGT20(this.numArr[2])) +
           'lakh '
-        : '';
-    str +=
-      Number(this.numArr[3]) != 0
-        ? (this.getLT20(this.numArr[3]) || this.getGT20(this.numArr[3])) +
+        } else {str+=''};
+    if ( Number(this.numArr[3]) != 0
+        ){ str += (this.getLT20(this.numArr[3]) || this.getGT20(this.numArr[3])) +
           'thousand '
-        : '';
-    str +=
-      Number(this.numArr[4]) != 0
-        ? this.getLT20(this.numArr[4]) + 'hundred '
-        : '';
-    str += Number(this.numArr[5]) != 0 && str != '' ? 'and ' : '';
-    str +=
-      Number(this.numArr[5]) != 0
-        ? this.getLT20(this.numArr[5]) || this.getGT20(this.numArr[5])
-        : '';
+        } else {str+=''};
+    if ( Number(this.numArr[4]) != 0
+        ){ str += this.getLT20(this.numArr[4]) + 'hundred '
+        } else {str+=''};
+    if ( Number(this.numArr[5]) != 0 && str != '' ){ str+= 'and' } else {str+=''};
+    if ( Number(this.numArr[5]) != 0
+        ){ str += (this.getLT20(this.numArr[5]) || this.getGT20(this.numArr[5]))
+        } else {str+=''};
     if ((Number(this.numArr[5]) === 1) && flag) {
-      str += 'rupee';
+      str += 'rupee ';
     } else {
       str += 'rupees';
     }
-    str +=
-      Number(this.numArr[7]) != 0
-        ? ' and ' +
-          (this.getLT20(this.numArr[7]) || this.getGT20(this.numArr[7])) +
-          ' paise'
-        : '';
+    if ( Number(this.numArr[7]) != 0
+        ){ str+=' and ' +
+          (str += (this.getLT20(this.numArr[7]) || this.getGT20(this.numArr[7]))) +
+          'paise'
+        } else {str+=''};
     return str.trim();
   }
 }
