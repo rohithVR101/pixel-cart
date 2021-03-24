@@ -6,7 +6,7 @@ import { BillComponent } from './components/vendor-panel/bill/bill.component';
 import { CartComponent } from './components/vendor-panel/cart/cart.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'cart', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
     path: 'cart',

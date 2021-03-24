@@ -1,28 +1,30 @@
-:root {
+.image{
+  background: url("/assets/images/home-banner.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* :root {
   --input-padding-x: 1.5rem;
   --input-padding-y: 0.75rem;
 }
 
 .login,
 .image {
-  min-height: 100vh;
 }
-/* .container {
+.container {
   padding: 10px;
 }
 .form {
   min-width: 100px;
   max-width: 500px;
   width: 100%;
-} */
+}
 .example-button-row a {
   padding-left: 350px;
 }
 
 .bg-image {
-  background-image: url("/assets/images/home-banner.jpg");
-  background-size: cover;
-  background-position: right;
 }
 
 .login-heading {
@@ -66,12 +68,12 @@
   display: block;
   width: 100%;
   margin-bottom: 0;
-  /* Override default `<label>` margin */
+  Override default `<label>` margin
   line-height: 1.5;
   color: #495057;
   cursor: text;
-  /* Match the input under the label */
+  Match the input under the label
   border: 1px solid transparent;
   border-radius: 0.25rem;
   transition: all 0.1s ease-in-out;
-}
+} */

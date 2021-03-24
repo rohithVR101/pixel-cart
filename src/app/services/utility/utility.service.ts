@@ -64,38 +64,66 @@ export class UtilityService {
     }
 
     this.numArr = ('000000000' + this.num).substr(-12).match(this.regex)!; // left pad zeros
+    console.log(this.numArr);
 
     let str = '';
-    let flag=false;
-    if ( Number(this.numArr[1]) != 0
-        ){ str += (this.getLT20(this.numArr[1]) || this.getGT20(this.numArr[1])) +
-          'crore '
-        } else {str+=''};
-    if ( Number(this.numArr[2]) != 0
-        ){ str += (this.getLT20(this.numArr[2]) || this.getGT20(this.numArr[2])) +
-          'lakh '
-        } else {str+=''};
-    if ( Number(this.numArr[3]) != 0
-        ){ str += (this.getLT20(this.numArr[3]) || this.getGT20(this.numArr[3])) +
-          'thousand '
-        } else {str+=''};
-    if ( Number(this.numArr[4]) != 0
-        ){ str += this.getLT20(this.numArr[4]) + 'hundred '
-        } else {str+=''};
-    if ( Number(this.numArr[5]) != 0 && str != '' ){ str+= 'and' } else {str+=''};
-    if ( Number(this.numArr[5]) != 0
-        ){ str += (this.getLT20(this.numArr[5]) || this.getGT20(this.numArr[5]))
-        } else {str+=''};
-    if ((Number(this.numArr[5]) === 1) && flag) {
+    let flag = false;
+    //For checking crore part
+    if (Number(this.numArr[1]) != 0) {
+      str +=
+        (this.getLT20(this.numArr[1]) || this.getGT20(this.numArr[1])) +
+        'crore ';
+    } else {
+      str += '';
+    }
+    //For checking lakh part
+    if (Number(this.numArr[2]) != 0) {
+      str +=
+        (this.getLT20(this.numArr[2]) || this.getGT20(this.numArr[2])) +
+        'lakh ';
+    } else {
+      str += '';
+    }
+    //For checking thousand part
+    if (Number(this.numArr[3]) != 0) {
+      str +=
+        (this.getLT20(this.numArr[3]) || this.getGT20(this.numArr[3])) +
+        'thousand ';
+    } else {
+      str += '';
+    }
+    //For checking hundred part
+    if (Number(this.numArr[4]) != 0) {
+      str += this.getLT20(this.numArr[4]) + 'hundred ';
+    } else {
+      str += '';
+    }
+    //For checking and part
+    if (Number(this.numArr[5]) != 0 && str != '') {
+      str += 'and ';
+    } else {
+      str += '';
+    }
+    //For checking tens part
+    if (Number(this.numArr[5]) != 0) {
+      str += this.getLT20(this.numArr[5]) || this.getGT20(this.numArr[5]);
+    } else {
+      str += '';
+    }
+    //For checking rupee part
+    if (Number(this.numArr[5]) === 1 && flag) {
       str += 'rupee ';
     } else {
       str += 'rupees';
     }
-    if ( Number(this.numArr[7]) != 0
-        ){ str+=' and ' +
-          (str += (this.getLT20(this.numArr[7]) || this.getGT20(this.numArr[7]))) +
-          'paise'
-        } else {str+=''};
+    //For checking decimal part
+    if (Number(this.numArr[7]) != 0) {
+      str +=
+        ' and ' + ((this.getLT20(this.numArr[7])) ||
+        (this.getGT20(this.numArr[7]))) + 'paise';
+    } else {
+      str += '';
+    }
     return str.trim();
   }
 }
