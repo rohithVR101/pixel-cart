@@ -1,24 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UtilityService } from '../../../services/utility/utility.service';
+import { FormControl, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoginErrorComponent } from './login-error/login-error.component';
 @Component({
   selector: 'app-root',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  phoneno = new FormControl('', [Validators.required, Validators.email]);
+  phoneno = new FormControl('', [
+    Validators.required,
+    Validators.pattern('(0/91)?[7-9][0-9]{9}'),
+  ]);
+  password = new FormControl('', [Validators.required]);
 
-  constructor(private utilityService: UtilityService, private router :Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
-  ngOnInit(): void {
-    console.log(this.utilityService.numWords((9.9).toFixed(2)));
-  }
+  ngOnInit(): void {}
 
   getErrorMessage() {
     if (this.phoneno.hasError('required')) {
-      return 'You must enter a value';
+      return 'Enter a valid Phoneno';
     }
 
     return this.phoneno.hasError('Phone') ? 'Not a valid phone no' : '';
@@ -26,6 +34,19 @@ export class LoginComponent implements OnInit {
   hide = true;
 
   login() {
-    this.router.navigate(['/cart']);
+    this.authService
+      .validate(this.phoneno.value, this.password.value)
+      .then((response: { [statusCode: string]: any }) => {
+        console.log(response['statusCode'] === 200);
+        if (response['statusCode'] === 200) {
+          this.authService.setUserInfo({ user: this.phoneno.value });
+          this.router.navigate(['cart']);
+        }
+      })
+      .catch((error) => {
+        this.snackBar.openFromComponent(LoginErrorComponent, {
+          duration: 2000,
+        });
+      });
   }
 }

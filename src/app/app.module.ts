@@ -55,6 +55,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { LoginErrorComponent } from './components/authentication/login/login-error/login-error.component';
+import { RazorpayComponent } from './components/vendor-panel/cart/dialogue-box/razorpay/razorpay.component';
 
 
 @NgModule({
@@ -91,6 +93,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     VendorPanelComponent,
     BillComponent,
     CartComponent,
+    LoginErrorComponent,
+    RazorpayComponent,
   ],
   imports: [
     BrowserModule,

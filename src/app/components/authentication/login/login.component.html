@@ -1,25 +1,30 @@
-<mat-grid-list cols="2" rowHeight="1:1">
-    <mat-grid-tile class="image"></mat-grid-tile>
-    <mat-grid-tile>
-        <form class="login-form">
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your phone number</mat-label>
-                <span matPrefix>+91 &nbsp;</span>
-                <input type="tel" matInput placeholder="1234567890">
-                <mat-icon matSuffix>mode_edit</mat-icon>
-                <mat-error *ngIf="phoneno.invalid">{{ getErrorMessage() }}</mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'">
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide">
-                    <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-                </button>
-            </mat-form-field>
-            <button class=" form-b text-uppercase font-weight-bold mb-2" mat-raised-button color="primary"
-                (click)="login()">LOGIN</button>
-            <a mat-button href="https://www.google.com/" target="_blank"><u>Forgot password</u></a>
-        </form>
-    </mat-grid-tile>
-</mat-grid-list>
+<div class="container-fluid">
+    <div class="row align-items-center">
+        <div class="col"><img src="assets/images/home-banner.jpg" alt="" class="image"></div>
+        <div class="col">
+            <mat-card style="background-color: #1E1E1E;">
+                <mat-card-title style="font-size: large !important; color:#9C27B0;">Welcome to Pixel Cart POS
+                </mat-card-title>
+                <form class="login-form">
+                    <mat-form-field class="login-full-width">
+                        <mat-label>Enter your phone number</mat-label>
+                        <span matPrefix>+91 &nbsp;</span>
+                        <input type="tel" [formControl]="phoneno" matInput placeholder="1234567890">
+                        <mat-error *ngIf="phoneno.invalid">{{ getErrorMessage() }}</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="login-full-width">
+                        <mat-label>Enter your password</mat-label>
+                        <input matInput [formControl]="password" [type]="hide ? 'password' : 'text'">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <button class=" form-b text-uppercase font-weight-bold mb-2" mat-raised-button
+                        style="background-color: #C38FFF; color: #000;" (click)="login()">LOGIN</button>
+                    <!-- <a mat-button href="https://www.google.com/" target="_blank"><u>Forgot password</u></a> -->
+                </form>
+            </mat-card>
+        </div>
+    </div>
+</div>

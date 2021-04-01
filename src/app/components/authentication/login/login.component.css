@@ -1,8 +1,47 @@
-.image{
-  background: url("/assets/images/home-banner.jpg");
-  background-size: cover;
-  background-position: center;
+.image {
+  object-fit: cover;
+  object-position: center;
+  height: 100%;
+  width: 100%;
 }
+.col {
+  height: 100vh;
+}
+
+.login-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+mat-card * {
+  color: #bdbdbd;
+  font-size: medium;
+}
+
+.login-full-width {
+  width: 100%;
+}
+
+mat-label {
+  width: auto;
+}
+
+mat-card {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* When the input is not focused */
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 0.4; /* Firefox */
+}
+
+input{
+  caret-color: plum;
+}
+
 
 /* :root {
   --input-padding-x: 1.5rem;
