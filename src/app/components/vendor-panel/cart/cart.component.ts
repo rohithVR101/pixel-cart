@@ -17,7 +17,6 @@ import { Cart } from 'src/app/models/Cart';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-declare var StripeCheckout: any;
 
 @Component({
   selector: 'app-cart',
@@ -62,7 +61,6 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadStripe();
     this.quantityChange = new FormControl();
     this.displayedColumns = [
       'product_id',
@@ -219,7 +217,6 @@ export class CartComponent implements OnInit {
           //       : '') + data[0].Cart_Session_ID;
           //   this.razorPayOptions.amount = this.total*100;
           // });
-          this.payWithStripe();
           // this.openSnackBar();
         }
       });
@@ -265,49 +262,5 @@ export class CartComponent implements OnInit {
         console.log(error);
       }
     );
-  }
-
-  payWithStripe() {
-    var handler = window.StripeCheckout.configure({
-      key: 'pk_test_aeUUjYYcx4XNfKVW60pmHTtI',
-      locale: 'auto',
-      token: function (token: any) {
-        // You can access the token ID with `token.id`.
-        // Get the token ID to your server-side code for use.
-        console.log(token);
-        alert('Token Created!!');
-      },
-    });
-
-    handler.open({
-      name: 'Pixel Cart',
-      description: 'Debit Card/Credit Card',
-      amount: this.total * 100,
-      email : this.customer_email,
-    });
-  }
-
-  loadStripe() {
-    if (!window.document.getElementById('stripe-script')) {
-      var s = window.document.createElement('script');
-      s.id = 'stripe-script';
-      s.type = 'text/javascript';
-      s.src = 'https://checkout.stripe.com/checkout.js';
-      s.onload = () => {
-        this.handler = window.StripeCheckout.configure({
-          key:
-            'pk_test_51IbK21SGXEz1vNVXl0UaXeiS7OoBhRC3DqH4HhAL6jbhHZTgsjZ1iDPjukGpJsMFZ7OmzfMYuVWTLx1pRZhPY7NM00C6H9Ht96',
-          locale: 'auto',
-          token: function (token: any) {
-            // You can access the token ID with `token.id`.
-            // Get the token ID to your server-side code for use.
-            console.log(token);
-            alert('Payment Success!!');
-          },
-        });
-      };
-
-      window.document.body.appendChild(s);
-    }
   }
 }
