@@ -13,16 +13,20 @@
     </mat-form-field>
     <mat-form-field class="customer-full-width">
         <mat-label>Full Name</mat-label>
-        <input matInput [(ngModel)]="data.Customer_Name">
+        <input matInput [formControl]="nameFormControl" matInput [(ngModel)]="data.Customer_Name">
+        <mat-error *ngIf="nameFormControl.hasError('required')">
+            Full Name is <strong>required</strong>
+        </mat-error>
     </mat-form-field>
     <mat-form-field class="customer-full-width">
         <mat-label>Phone Number</mat-label>
         <span matPrefix>+91 &nbsp;</span>
-        <input type="tel" matInput placeholder="1234567890" [(ngModel)]="data.Customer_Phone">
+        <input type="tel" [formControl]="phoneno" matInput placeholder="1234567890" [(ngModel)]="data.Customer_Phone">
+        <mat-error *ngIf="phoneno.invalid">{{ getErrorMessage() }}</mat-error>
         <!-- <mat-icon matSuffix>mode_edit</mat-icon> -->
     </mat-form-field>
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Back</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Continue</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial (click)="onNoClick()">Continue</button>
 </div>
