@@ -24,7 +24,6 @@ import { ProductInfoContentComponent } from './components/vendor-panel/cart/prod
 import { PriceDetailsComponentComponent } from './components/vendor-panel/cart/price-details-component/price-details-component.component';
 import { VendorPanelFooterComponent } from './components/vendor-panel/vendor-panel-footer/vendor-panel-footer.component';
 import { BillGeneratedMessageSnackBarComponent } from './components/vendor-panel/cart/bill-generated-message-snack-bar/bill-generated-message-snack-bar.component';
-import { CustomerPhoneNumberEntryComponent } from './components/vendor-panel/cart/dialogue-box/customer-phone-number-entry/customer-phone-number-entry.component';
 import { CustomerEmailNameEntryComponent } from './components/vendor-panel/cart/dialogue-box/customer-email-name-entry/customer-email-name-entry.component';
 import { CustomerCashCardSelectionComponent } from './components/vendor-panel/cart/dialogue-box/customer-cash-card-selection/customer-cash-card-selection.component';
 import { AmountProvidedCustomerEntryComponent } from './components/vendor-panel/cart/dialogue-box/amount-provided-customer-entry/amount-provided-customer-entry.component';
@@ -56,8 +55,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { LoginErrorComponent } from './components/authentication/login/login-error/login-error.component';
-import { RazorpayComponent } from './components/vendor-panel/cart/dialogue-box/razorpay/razorpay.component';
-
 
 @NgModule({
   declarations: [
@@ -78,7 +75,6 @@ import { RazorpayComponent } from './components/vendor-panel/cart/dialogue-box/r
     PriceDetailsComponentComponent,
     VendorPanelFooterComponent,
     BillGeneratedMessageSnackBarComponent,
-    CustomerPhoneNumberEntryComponent,
     CustomerEmailNameEntryComponent,
     CustomerCashCardSelectionComponent,
     AmountProvidedCustomerEntryComponent,
@@ -94,7 +90,6 @@ import { RazorpayComponent } from './components/vendor-panel/cart/dialogue-box/r
     BillComponent,
     CartComponent,
     LoginErrorComponent,
-    RazorpayComponent,
   ],
   imports: [
     BrowserModule,

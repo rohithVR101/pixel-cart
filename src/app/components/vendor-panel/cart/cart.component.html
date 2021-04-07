@@ -69,12 +69,12 @@
                     <h2>Cart Amount Details</h2>
                 </mat-card-subtitle>
                 <mat-card-content>Sub-total Amount
-                    : ₹{{subtotal}}</mat-card-content>
-                <mat-card-content>Order Discount : -₹{{discounttotal}}</mat-card-content>
+                    : ₹{{order_data.Subtotal}}</mat-card-content>
+                <mat-card-content>Order Discount : -₹{{order_data.Discount}}</mat-card-content>
                 <mat-card-content>Tax (GST) : +₹{{taxtotal}}</mat-card-content>
                 <mat-card class="mat-elevation-z0" style="background: lightcyan; margin: 0px; width: inherit;">
                     <mat-card-title style="text-align: right; color: seagreen;">Total Amount
-                        : ₹ {{total}}</mat-card-title>
+                        : ₹ {{order_data.Total}}</mat-card-title>
                 </mat-card>
             </mat-card>
         </div>
@@ -82,14 +82,9 @@
         </div> -->
     </div>
     <mat-toolbar class="footer-bar">
+        <div></div>
         <div>
-            <button mat-button routerLink="/">
-                <span>Admin Panel Login</span>
-            </button>
-        </div>
-        <div>
-            <button mat-button (click)="proceed()" style="background-color: springgreen; 
-    ">
+            <button mat-button (click)="proceed()" style="background-color: springgreen;">
                 <mat-icon>arrow_forward</mat-icon>
             </button>
         </div>

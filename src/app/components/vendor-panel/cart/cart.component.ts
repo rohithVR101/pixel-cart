@@ -1,35 +1,22 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-
 import { AddProductComponent } from './button/add-product/add-product.component';
 import { CustomerEmailNameEntryComponent } from './dialogue-box/customer-email-name-entry/customer-email-name-entry.component';
-import { CustomerCashCardSelectionComponent } from './dialogue-box/customer-cash-card-selection/customer-cash-card-selection.component';
-import { AmountProvidedCustomerEntryComponent } from './dialogue-box/amount-provided-customer-entry/amount-provided-customer-entry.component';
-import { BalanceAmountComponent } from './dialogue-box/balance-amount/balance-amount.component';
-import { BillGeneratedMessageSnackBarComponent } from './bill-generated-message-snack-bar/bill-generated-message-snack-bar.component';
-
 import { CartService } from 'src/app/services/cart/cart.service';
 import { OrderService } from 'src/app/services/order/order.service';
-
 import { Cart } from 'src/app/models/Cart';
-
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Order } from 'src/app/models/Order';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, AfterViewInit {
   quantityChange!: FormControl;
-
-  bill_no!: string;
-  order_date!: string;
-  order_time!: string;
-  subtotal!: number;
   taxtotal!: number;
   discounttotal!: number;
   total!: number;
@@ -39,11 +26,30 @@ export class CartComponent implements OnInit {
   total_quantity!: number;
 
   product_id!: number;
-  customer_phone!: string;
-  customer_name!: string;
-  customer_email!: string;
 
-  order_data!: object;
+  order_data: Order = new Order(
+    '',
+    '',
+    '',
+    '',
+    '',
+    -1,
+    '',
+    -1,
+    -1,
+    -1,
+    '',
+    '',
+    '',
+    '',
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1,
+    -1
+  );
   bill_subscription!: Subscription;
   handler: any = null;
 
@@ -51,13 +57,12 @@ export class CartComponent implements OnInit {
   table!: MatTable<any>;
   products!: Cart[];
   displayedColumns!: String[];
-  dataSource!: Cart[];
+  dataSource: Cart[] = [];
 
   constructor(
     private cartService: CartService,
     private orderService: OrderService,
-    public dialog: MatDialog,
-    private _snackBar: MatSnackBar
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -73,12 +78,28 @@ export class CartComponent implements OnInit {
     this.dataSource = this.products;
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.order_data.Subtotal =
+        Math.round(this.products.reduce((n, { Price }) => n + Price, 0) * 100) /
+        100;
+      this.order_data.Discount = 0;
+      this.taxtotal = Math.round(this.order_data.Subtotal * 0.05 * 100) / 100;
+      this.order_data.Total =
+        Math.round(
+          (this.order_data.Subtotal +
+            this.taxtotal -
+            this.order_data.Discount) *
+            100
+        ) / 100;
+    }, 500);
+  }
+
   refreshList(): void {
     this.cartService.refresh().subscribe(
       (data) => {
         this.products = data;
         this.table.renderRows();
-        console.log(this.products);
         this.updateTotal();
       },
       (error) => {
@@ -130,15 +151,19 @@ export class CartComponent implements OnInit {
     );
   }
 
-  createOrder(orderData: object): void {
-    this.orderService.new(orderData).subscribe(
-      (data) => {
-        this.refreshList();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+  updateOrderData(): void {
+    this.cartService.refresh().subscribe((data) => {
+      this.total_quantity = data.reduce((n, { Quantity }) => n + Quantity, 0);
+      this.order_data.Bill_No =
+        (3 - ('' + data[0].Cart_Session_ID).length > 0
+          ? new Array(3 - ('' + data[0].Cart_Session_ID).length + 1).join('0')
+          : '') + data[0].Cart_Session_ID;
+      this.order_data.Order_Date = new Date().toDateString();
+      this.order_data.Order_Time = new Date().toLocaleTimeString();
+      this.order_data.CGST = this.taxtotal / 2;
+      this.order_data.SGST = this.taxtotal / 2;
+      this.order_data.Discount = this.order_data.Discount;
+    });
   }
 
   removeAllProducts(): void {
@@ -153,114 +178,30 @@ export class CartComponent implements OnInit {
   }
 
   updateTotal() {
-    this.subtotal =
+    this.order_data.Subtotal =
       Math.round(this.products.reduce((n, { Price }) => n + Price, 0) * 100) /
       100;
-    this.discounttotal = 0;
-    this.taxtotal = Math.round(this.subtotal * 0.05 * 100) / 100;
-    this.total =
-      Math.round((this.subtotal + this.taxtotal - this.discounttotal) * 100) /
-      100;
+    this.order_data.Discount = 0;
+    this.taxtotal = Math.round(this.order_data.Subtotal * 0.05 * 100) / 100;
+    this.order_data.Total =
+      Math.round(
+        (this.order_data.Subtotal + this.taxtotal - this.order_data.Discount) *
+          100
+      ) / 100;
   }
 
   proceed(): void {
-    const dialogRef = this.dialog.open(CustomerEmailNameEntryComponent, {
-      data: {
-        Customer_Email: this.customer_email,
-        Customer_Name: this.customer_name,
-        Customer_Phone: this.customer_phone,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
-      const dialogRef = this.dialog.open(CustomerCashCardSelectionComponent, {
-        data: {
-          payment_mode: this.payment_mode,
-        },
-      });
-
-      dialogRef.afterClosed().subscribe((result) => {
-        console.log(result);
-        this.payment_mode = result;
-        if (result === 'cash') {
-          const dialogRef = this.dialog.open(
-            AmountProvidedCustomerEntryComponent,
-            {
-              data: {
-                amount: this.paid,
-              },
-            }
-          );
-
-          dialogRef.afterClosed().subscribe((result: number) => {
-            console.log(result - this.total);
-            this.paid = Math.round((result - this.total) * 100) / 100;
-            const dialogRef = this.dialog.open(BalanceAmountComponent, {
-              data: {
-                balance_amount: this.paid,
-              },
-            });
-
-            dialogRef.afterClosed().subscribe((result) => {
-              console.log(result);
-              this.openSnackBar();
-            });
-          });
-        } else {
-          // this.cartService.refresh().subscribe((data) => {
-          //   this.razorPayOptions.order_id =
-          //     (3 - ('' + data[0].Cart_Session_ID).length > 0
-          //       ? new Array(3 - ('' + data[0].Cart_Session_ID).length + 1).join(
-          //           '0'
-          //         )
-          //       : '') + data[0].Cart_Session_ID;
-          //   this.razorPayOptions.amount = this.total*100;
-          // });
-          // this.openSnackBar();
-        }
-      });
-    });
-  }
-  openSnackBar() {
-    this.cartService.refresh().subscribe(
+    this.orderService.clear().subscribe(
       (data) => {
-        this._snackBar.openFromComponent(BillGeneratedMessageSnackBarComponent);
-        this.order_date = new Date().toDateString();
-        this.order_time = new Date().toLocaleTimeString();
-        this.bill_no =
-          (3 - ('' + data[0].Cart_Session_ID).length > 0
-            ? new Array(3 - ('' + data[0].Cart_Session_ID).length + 1).join('0')
-            : '') + data[0].Cart_Session_ID;
-        this.payment_mode =
-          this.payment_mode.substring(0, 1).toUpperCase() +
-          this.payment_mode.substring(1);
-        this.total_quantity = data.reduce((n, { Quantity }) => n + Quantity, 0);
-        data.forEach((product) => {
-          this.createOrder({
-            Bill_No: this.bill_no,
-            Customer_Phone: this.customer_phone,
-            Product_ID: product.Product_ID,
-            Product_Name: product.Product_Name,
-            Quantity: product.Quantity,
-            Rate: product.Price,
-            Amount: product.Quantity * product.Price,
-            Order_Date: this.order_date,
-            Order_Time: this.order_time,
-            Payment_Mode: this.payment_mode,
-            Received_Amount: this.paid,
-            Balance_Given: this.paid,
-            CGST: this.taxtotal / 2,
-            SGST: this.taxtotal / 2,
-            Discount: this.discounttotal,
-            Sub_Total: this.subtotal,
-          });
-        });
-        // this.sendOrderData(this.order_data);
+        console.log(data);
       },
       (error) => {
         console.log(error);
       }
     );
+    this.updateOrderData();
+    this.dialog.open(CustomerEmailNameEntryComponent, {
+      data: this.order_data,
+    });
   }
 }

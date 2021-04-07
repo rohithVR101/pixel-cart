@@ -36,7 +36,7 @@ export class BillComponent implements OnInit {
 
   ngOnInit() {
     this.getBillData();
-    // window.print();
+    window.print();
   }
 
   getBillData() {

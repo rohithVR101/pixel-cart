@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WindowRefService } from './window-ref.service';
+import { PaymentService } from './payment.service';
 
-describe('WindowRefService', () => {
-  let service: WindowRefService;
+describe('PaymentService', () => {
+  let service: PaymentService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(WindowRefService);
+    service = TestBed.inject(PaymentService);
   });
 
   it('should be created', () => {

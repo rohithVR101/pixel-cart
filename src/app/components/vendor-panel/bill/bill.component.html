@@ -49,9 +49,12 @@
                 <td>
                     <div style="text-align: left;">
                         <p>Payment Mode: {{payment_mode}}</p>
-                        <div class="payment mode">
+                        <div *ngIf="paid!==-1" class="payment mode">
                             <p>Received Amount: {{paid}}</p>
                             <p>Balance given: {{balance_given}}</p>
+                        </div>
+                        <div *ngIf="paid===-1" class="payment mode">
+                            <p>Transaction ID: pay_GvCl62Gj42LOHA</p>
                         </div>
                         <p>Total items: {{products.length}}</p>
                     </div>

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  key_id: 'rzp_test_cUHoOQMkDiw5lC',
-  key_secret: 'eJVOLGMeVmFz4uNUL9ENh9w9',
+  key_id: 'rzp_test_EuKcWZiJSQgjD2',
+  key_secret: 'IVXIe5Q66IGVo1R7Eb9AcS4o',
 };
 
 /*

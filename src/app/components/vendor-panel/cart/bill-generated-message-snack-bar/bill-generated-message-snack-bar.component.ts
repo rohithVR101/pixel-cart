@@ -3,6 +3,7 @@ import {
   MAT_SNACK_BAR_DATA,
   MatSnackBarRef,
 } from '@angular/material/snack-bar';
+import { Order } from 'src/app/models/Order';
 
 @Component({
   selector: 'app-bill-generated-message-snack-bar',
@@ -12,7 +13,7 @@ import {
 export class BillGeneratedMessageSnackBarComponent implements OnInit {
   constructor(
     private billCard: MatSnackBarRef<BillGeneratedMessageSnackBarComponent>,
-    @Inject(MAT_SNACK_BAR_DATA) public data: object
+    @Inject(MAT_SNACK_BAR_DATA) public data: Order
   ) {}
 
   ngOnInit(): void {}

@@ -1,32 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroupDirective,
-  NgForm,
-  Validators,
-} from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
-import { Customer } from 'src/app/models/Customer';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   MatDialog,
   MAT_DIALOG_DATA,
   MatDialogRef,
 } from '@angular/material/dialog';
-
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(
-    control: FormControl | null,
-    form: FormGroupDirective | NgForm | null
-  ): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(
-      control &&
-      control.invalid &&
-      (control.dirty || control.touched || isSubmitted)
-    );
-  }
-}
+import { CustomerCashCardSelectionComponent } from '../customer-cash-card-selection/customer-cash-card-selection.component';
+import { Order } from 'src/app/models/Order';
 
 @Component({
   selector: 'app-customer-email-name-entry',
@@ -34,37 +14,44 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./customer-email-name-entry.component.css'],
 })
 export class CustomerEmailNameEntryComponent implements OnInit {
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
-  nameFormControl = new FormControl('', [Validators.required]);
-  phoneno = new FormControl('', [
-    Validators.required,
-    Validators.pattern('(0/91)?[7-9][0-9]{9}'),
-    Validators.pattern("^[0-9]*$")
-  ]);
-  matcher = new MyErrorStateMatcher();
+  form!: FormGroup;
+  order_data!: Order;
 
   constructor(
     public dialogRef: MatDialogRef<CustomerEmailNameEntryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Customer
+    public dialog: MatDialog,
+    private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: Order
   ) {}
 
+  ngOnInit(): void {
+    this.order_data = this.data;
+    console.log(this.order_data);
+    this.form = this.formBuilder.group({
+      emailFormControl: [
+        this.order_data.Customer_Email,
+        [Validators.required, Validators.email],
+      ],
+      nameFormControl: [this.order_data.Customer_Name, [Validators.required]],
+      phoneno: [
+        this.order_data.Customer_Phone,
+        [Validators.required, Validators.pattern('(0/91)?[7-9][0-9]{9}')],
+      ],
+    });
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-  
-  ngOnInit(): void {}
-  getErrorMessage() {
-    if (this.phoneno.hasError('required')) {
-      return 'Enter a valid Phoneno';
-    }
 
-    return this.phoneno.hasError('Phone') ? 'Not a valid phone no' : '';
+  proceed() {
+    this.order_data.Customer_Phone = this.form.controls['phoneno'].value;
+    this.order_data.Customer_Email = this.form.controls[
+      'emailFormControl'
+    ].value;
+    this.order_data.Customer_Name = this.form.controls['nameFormControl'].value;
+    this.dialog.open(CustomerCashCardSelectionComponent, {
+      data: this.order_data,
+    });
   }
-  hide = true;
-
-  
 }
