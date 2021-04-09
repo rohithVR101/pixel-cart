@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = 'http://localhost:3000/api/user';
+  baseUrl = 'https://siet-cart.herokuapp.com/api/user';
 
   httpOptions = {
     headers: new HttpHeaders({

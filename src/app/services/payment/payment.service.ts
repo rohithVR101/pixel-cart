@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PaymentService {
-  baseUrl = 'http://localhost:3000/api/payment';
+  baseUrl = 'https://siet-cart.herokuapp.com/api/payment';
 
   httpOptions = {
     headers: new HttpHeaders({

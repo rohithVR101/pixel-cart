@@ -7,7 +7,7 @@ import { Cart } from "../../models/Cart";
   providedIn: 'root',
 })
 export class CartService {
-  baseUrl = 'http://localhost:3000/api/cart';
+  baseUrl = 'https://siet-cart.herokuapp.com/api/cart';
 
   httpOptions = {
     headers: new HttpHeaders({
