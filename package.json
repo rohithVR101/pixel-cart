@@ -8,6 +8,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
+    "postinstall": "ngcc",
     "e2e": "ng e2e",
     "electron": "electron .",
     "electron-build": "ng build --prod && electron .",
