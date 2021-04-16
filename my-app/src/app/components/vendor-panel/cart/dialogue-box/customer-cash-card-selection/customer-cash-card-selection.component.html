@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Choose Payment Mode</h1>
+<div mat-dialog-content>
+    <mat-radio-group [(ngModel)]="payment_mode">
+        <mat-radio-button value="cash">Cash</mat-radio-button>
+        <mat-radio-button value="online">Debit Card/Credit Card/UPI/Mobile wallet</mat-radio-button>
+    </mat-radio-group>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Back</button>
+    <button mat-button [mat-dialog-close]="payment_mode" [disabled]="payment_mode==='none'" (click)="proceed()">Continue</button>
+</div>

@@ -1,0 +1,80 @@
+<div id="bill-body" style="text-align: center; font-family: serif;">
+    <div>
+        <h2 style="font-family: serif; font-weight: bold;">Bill No : {{bill_no}}</h2>
+        <h3 style="font-family: serif;  font-weight: bold;">SRS Supermarket</h3>
+        <p>2784 Glacier Hill Street</p>
+        <p>Atlanta</p>
+        <p>GSTIN : 33EDCBA0000A1Z5</p>
+        <p>Phone no : +91 9657989043</p>
+        <table style="width: 100%;text-align: left;">
+            <tr>
+                <td>
+                    <p style="padding-bottom: 40px;">User: admin</p>
+
+                </td>
+                <td>
+                    <div style="text-align: right;">
+                        <p>Date: {{order_date}}</p>
+                        <p>Time: {{order_time}}</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="row table-row">
+        <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+            <thead>
+                <tr>
+                    <th class="text-center" style="padding-right: 110px">#</th>
+                    <th style="width:40%">Item</th>
+                    <th class="text-right" style="width:25%">Quantity</th>
+                    <th class="text-right" style="width:15%">Rate</th>
+                    <th class="text-right" style="width:15%;padding-left: 110px;">Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i of numbers">
+                    <td class="text-center" style="padding-right: 110px">{{i+1}}</td>
+                    <td>{{products[i].Product_Name}}</td>
+                    <td class="text-right">{{products[i].Quantity}}</td>
+                    <td class="text-right">₹{{products[i].Rate}}</td>
+                    <td class="text-right" style="padding-left: 110px">₹{{products[i].Amount}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-xs-6 text-right pull-right invoice-total">
+        <table style="width: 100%;text-align: left;">
+            <tr>
+                <td>
+                    <div style="text-align: left;">
+                        <p>Payment Mode: {{payment_mode}}</p>
+                        <div *ngIf="paid!==-1" class="payment mode">
+                            <p>Received Amount: {{paid}}</p>
+                            <p>Balance given: {{balance_given}}</p>
+                        </div>
+                        <div *ngIf="paid===-1" class="payment mode">
+                            <p>Transaction ID: pay_GvCl62Gj42LOHA</p>
+                        </div>
+                        <p>Total items: {{products.length}}</p>
+                    </div>
+                </td>
+                <td>
+                    <div style="text-align: right;">
+                        <p>Subtotal : {{subtotal}}</p>
+                        <p>Discount (10%) : {{discounttotal}} </p>
+                        <p>CGST (5%) : {{cgst}} </p>
+                        <p>SGST (5%) : {{sgst}} </p>
+                        <p>GST (5%) : {{taxtotal}} </p>
+                        <p style="font-weight: bold;">Grand Total : {{total}} </p>
+                        <p style="text-transform: uppercase;">{{total_text}}</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <div>
+        <p class="lead marginbottom">THANK YOU! VISIT AGAIN</p>
+    </div>
+</div>
