@@ -1,1 +1,1 @@
-web: npm inst
+web: npm postinstall
