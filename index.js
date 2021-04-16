@@ -4,7 +4,7 @@ const app = express();
 const users = [];
 
 app.use(express.json());
-app.use(express.static(process.cwd() + "/my-app/dist/angular-nodejs-example/"));
+app.use(express.static(process.cwd() + "/my-app/dist/pixel-cart/"));
 
 app.get("/api/users", (req, res) => {
   res.json(users);
@@ -18,7 +18,7 @@ app.post("/api/user", (req, res) => {
 
 app.get("/", (req, res) => {
   res.sendFile(
-    process.cwd() + "/my-app/dist/angular-nodejs-example/index.html"
+    process.cwd() + "/my-app/dist/pixel-cart/index.html"
   );
 });
 
