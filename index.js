@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-port = 3080;
 
 const users = [];
 
@@ -23,6 +22,6 @@ app.get("/", (req, res) => {
   );
 });
 
-app.listen(port, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log(`Server listening on the port::${port}`);
 });
