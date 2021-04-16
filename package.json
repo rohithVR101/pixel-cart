@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node prod-build/server.bundle.js",
     "build": "webpack",
+    "inst" : "cd my-app &&  npm install",
     "dev": "nodemon ./server.js localhost 3080",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
