@@ -7,7 +7,7 @@ import { Order } from '../../models/Order';
   providedIn: 'root',
 })
 export class OrderService {
-  baseUrl = 'https://siet-cart.herokuapp.com/api/orders';
+  baseUrl = 'https://pixel-cart-cloud.herokuapp.com/api/orders';
 
   httpOptions = {
     headers: new HttpHeaders({

@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = 'https://siet-cart.herokuapp.com/api/user';
+  baseUrl = 'https://pixel-cart-cloud.herokuapp.com/api/user';
 
   httpOptions = {
     headers: new HttpHeaders({
