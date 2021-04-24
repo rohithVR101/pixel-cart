@@ -1,6 +1,14 @@
 # PixelCart
 
+A semi-POS system for the concept for Smart Trolley implementation in supermarkets.
+Back-end of this application can be found here https://github.com/rohithVR101/pixel-cart-cloud
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.3.
+Electron.js integrated.
+
+## Hosted live app
+
+https://pixel-cart.web.app/
 
 ## Development server
 
